@@ -1,0 +1,57 @@
+﻿@model perfilUsuario.Models.Cliente
+
+@{
+    ViewData["Title"] = "Cliente";
+}
+
+<h1>Detalhes Produto</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Nome" class="control-label"></label>
+            <input asp-for="Nome" class="form-control" readonly />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Login" class="control-label"></label>
+            <input asp-for="Login" class="form-control" readonly />
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Senha" class="control-label"></label>
+            <input asp-for="Senha" class="form-control" readonly />
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" readonly />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            @{
+                try {
+                    var base64 = Convert.ToBase64String(Model.Foto);
+                    if (!string.IsNullOrEmpty(base64))
+                    {
+                        var imgSrc = String.Format("data:image/png.base64, {0}", base64);
+                            <img class="img-fluid" src="@imgSrc" width="300" />
+                    }
+                } catch
+                {
+                        <img class="img-fluid"
+                        src="https://pbs.twimg.com/profile_images/1257045815060807686/uzOADAzD_400x400.jpg"
+                        width="150" />
+                }
+            }
+        </div>
+        <div class="form-group" style="margin-top:15px;">
+            <a class="btn btn-outline-primary btn-sm"
+            asp-action="Edit"
+            asp-route-id="@Model.Id>Editar">Editar</a>
+            <a class="btn btn-secondary text-white btn-sm"
+            asp-action="Index">Voltar</a>
+        </div>
+    </div>
+</div>

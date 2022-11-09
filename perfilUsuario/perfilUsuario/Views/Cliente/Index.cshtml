@@ -1,0 +1,78 @@
+﻿@model IEnumerable<perfilUsuario.Models.Cliente>
+@{
+    ViewData["Title"] = "Index";
+}
+<p>
+    <a class="btn btn-outline-primary" asp-action="Create">
+        Inserir Cliente
+    </a>
+</p>
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Senha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            <th class="text-center">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="align-middle">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Senha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @{
+                        try
+                        {
+                            var base64 = Convert.ToBase64String(@item.Foto);
+                            if (!string.IsNullOrEmpty(base64))
+                            {
+                                var imgSrc = String.Format("data:image/png;base64, {0}", base64);
+                                <img class="img-fluid" src="@imgSrc" width="100" />
+                            }
+                        } catch
+                        {
+                            <img class="img-fluid" src="https://pbs.twimg.com/profile_images/1257045815060807686/uzOADAzD_400x400.jpg"
+                            width="70" />
+                        }
+                    }
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">
+                        Editar
+                    </a>
+                    <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id">
+                        Detalhes
+                    </a>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Delete" asp-route-id="@item.Id">
+                        Apagar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
